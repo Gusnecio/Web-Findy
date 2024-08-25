@@ -19,7 +19,10 @@ function MainContent() {
 
     Promise.all([fetchUsers])
       .then(([usersData]) => {
-        setUsers(usersData);
+        const filteredUsers = usersData.filter(
+          (user) => user.profilePicture && user.postPicture
+        );
+        setUsers(filteredUsers);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

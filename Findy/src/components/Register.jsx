@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  // En tu componente Register
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      alert("Passwords do not match");
       setLoading(false);
       return;
     }
@@ -31,17 +32,13 @@ const Register = () => {
         }
       );
 
-      const data = await response.json();
-
       if (response.ok) {
-        console.log("Registration successful:", data);
+        navigate("/login");
       } else {
-        setError(data.message || "Registration failed");
-        console.error("Error details:", data);
+        navigate("/");
       }
     } catch (error) {
-      setError("An error occurred. Please try again.");
-      console.error("Error:", error);
+      alert("An unexpected error occurred. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -116,7 +113,6 @@ const Register = () => {
               required
             />
           </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
           <button
             type="submit"
             className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

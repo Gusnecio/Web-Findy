@@ -1,13 +1,13 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [identifier, setidentifier] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,26 +15,28 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("https://fake-api-eight-gilt.vercel.app/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://fake-api-eight-gilt.vercel.app/users",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
         const user = data.find(
           (user) =>
-            user.username === username &&
-            user.email === email &&
+            (user.username === identifier || user.email === identifier) &&
             user.password === password
         );
 
         if (user) {
           console.log("Login successful:", user);
-          // Aquí podrías redirigir al usuario a otra página después de un login exitoso
+          navigate("/layout");
         } else {
           setError("Invalid credentials");
           console.error("No matching user found");
@@ -52,7 +54,7 @@ const Login = () => {
   };
 
   const handleRegisterRedirect = () => {
-    navigate("/register"); // Redirige a la página de registro
+    navigate("/register");
   };
 
   return (
@@ -62,33 +64,17 @@ const Login = () => {
         <form className="space-y-4" onSubmit={handleLogin}>
           <div>
             <label
-              htmlFor="username"
+              htmlFor="username o email"
               className="block text-sm font-medium text-gray-700"
             >
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
+              Username or Email
             </label>
             <input
               id="email"
-              type="email"
+              type="text"
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={identifier}
+              onChange={(e) => setidentifier(e.target.value)}
               required
             />
           </div>
