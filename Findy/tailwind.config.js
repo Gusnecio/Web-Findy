@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        pastel: "#FF7674",
+      },
+      fontFamily: {
+        balsamiq: ["'Balsamiq Sans'", "sans-serif"],
+      },
+    },
   },
   plugins: [],
-}
-
+};

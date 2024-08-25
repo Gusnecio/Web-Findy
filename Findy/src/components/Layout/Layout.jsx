@@ -1,12 +1,20 @@
 import { Outlet } from "react-router-dom";
-import NavBar from "../NavBar";
+import SideBar from "../SideBar";
+import MainContent from "../MainContent";
+import RightPanel from "../RightPanel";
 import "../../index.css";
 
 const Layout = () => {
   return (
-    <div>
-      <NavBar />
-      <Outlet />
+    <div className="flex justify-between">
+      <div>
+        <SideBar />
+      </div>
+
+      <MainContent>
+        <Outlet />
+      </MainContent>
+      <RightPanel />
     </div>
   );
 };
