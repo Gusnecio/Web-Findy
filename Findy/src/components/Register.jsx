@@ -38,7 +38,7 @@ const Register = () => {
         navigate("/");
       }
     } catch (error) {
-      alert("An unexpected error occurred. Please try again later.");
+      alert("An unexpected error occurred. Please try again later.", error);
     } finally {
       setLoading(false);
     }
