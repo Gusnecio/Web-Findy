@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logoFindy from "/logo/LOGOFINDY.png";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -33,7 +32,7 @@ const Register = () => {
       );
 
       if (response.ok) {
-        navigate("/login");
+        navigate("/");
       } else {
         navigate("/");
       }
@@ -45,16 +44,9 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#FF74B7] via-[#FF7674] to-[#FF74FC] flex flex-col lg:flex-row">
-      <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-start lg:relative order-1 lg:order-2">
-        <img
-          className="w-full h-auto lg:w-full object-cover"
-          src={logoFindy}
-          alt="Register background"
-        />
-      </div>
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-48 order-2 lg:order-1">
-        <div className="w-full max-w-md p-10 space-y-14 bg-white rounded-lg shadow-md">
+    <div className="min-h-screen bg-gradient-to-r from-[#FF74B7] via-[#FF7674] to-[#FF74FC] flex justify-center">
+      <div className="w-full flex items-center justify-center p-6 lg:p-48">
+        <div className="w-full max-w-md p-10 space-y-14 bg-white rounded-lg shadow-md ">
           <h2 className="text-2xl font-bold text-center">Register</h2>
           <form className="space-y-4" onSubmit={handleRegister}>
             <div>
