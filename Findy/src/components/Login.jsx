@@ -66,7 +66,7 @@ const Login = () => {
               htmlFor="username o email"
               className="block text-sm font-medium text-gray-700"
             >
-              Username or Email
+              Usario o Correo Electronico
             </label>
             <input
               id="email"
@@ -82,7 +82,7 @@ const Login = () => {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              Password
+              Contraseña
             </label>
             <input
               id="password"
