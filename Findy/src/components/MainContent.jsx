@@ -40,7 +40,7 @@ function MainContent() {
       <div className="flex justify-between lg:hidden sm:block mb-5">
         <img src={logoFindy} alt="LogoFIndy" />
         <ul className="flex gap-2">
-          <li className="flex cursor-pointer hover:text-pastel items-center m-">
+          <li className="flex cursor-pointer hover:text-pastel items-center">
             <img className="" src={iconNoti} alt="iconBuscar" />
           </li>
           <li className="flex cursor-pointer hover:text-pastel items-center">
@@ -49,15 +49,20 @@ function MainContent() {
         </ul>
       </div>
       <div className="mb-8 flex overflow-x-auto scrollbar-hide justify-center">
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 ">
           {users.map((user) => (
-            <div key={user.id} className="flex-shrink-0 text-center">
+            <div
+              key={user.id}
+              className="flex-shrink-0 flex flex-col items-center"
+            >
               <img
                 src={user.profilePicture}
                 alt={user.username}
                 className="w-16 h-16 rounded-full border-2 border-pink-500 p-1 object-cover"
               />
-              <p className="mt-2 text-sm text-gray-700">{user.username}</p>
+              <p className="mt-2 text-sm text-gray-700 flex items-center max-w-20">
+                {user.username.split(" ")[0]}
+              </p>
             </div>
           ))}
         </div>
@@ -73,14 +78,14 @@ function MainContent() {
               >
                 <Link
                   to={`/profile/${user.id}`}
-                  className="mb-4 text-lg font-semibold text-gray-700"
+                  className="text-lg font-semibold text-gray-700 "
                 >
                   {user.username}
                 </Link>
                 <img
                   src={post.postPicture}
                   alt={user.username}
-                  className="w-full lg:h-[30rem] h-[25rem] rounded-lg object-cover mb-4"
+                  className="w-full lg:h-[30rem] h-[25rem] rounded-lg object-cover mb-4 mt-4"
                 />
                 <div className="flex p-2 items-start gap-2">
                   <div className="flex flex-col space-x-2">
