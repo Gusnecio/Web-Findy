@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SideBar from "./SideBar";
-
+import atras from "/icons/atras.svg";
 function UserProfile() {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
@@ -38,27 +38,43 @@ function UserProfile() {
   const coverPhoto = user.posts.find((post) => post.postId === 2);
 
   return (
-    <div className="w-[80%] ml-[17%] p-1 font-balsamiq">
+    <div className="lg:w-[80%] lg:ml-[17%] lg:p-1 lg:font-balsamiq w-full max-w-screen-xl">
       <SideBar />
       <div className="relative">
+        <div className="flex space-x-4 absolute left-4 top-4 lg:hidden">
+          <div className="flex items-center justify-start mt-4">
+            <img src={atras} alt={"atras"} />
+          </div>
+          <div>
+            <p className=" ml-[300px] text-4xl">...</p>
+          </div>
+        </div>
         <img
-          className="w-full"
+          className="lg:w-full"
           src={coverPhoto ? coverPhoto.postPicture : "/default-cover.png"}
-          alt={`${user.username} Cover`}
+          alt={`${user.username}`}
         />
-        <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-16">
+        <div className="absolute left-[45%] transform -translate-x-[45%] lg:-bottom-16 flex items-center  ">
+          <div className="text-center mr-10 lg:hidden">
+            <h2 className="text-sm font-bold">{user.followers} M</h2>
+            <p className="text-gray-500 text-xs">Followers</p>
+          </div>
           <img
-            className="w-32 h-32 rounded-full border-4 border-white"
+            className="lg:w-[150px] lg:h-[150px] lg:ml-24  rounded-full border-4 border-white -mt-14"
             src={user.profilePicture}
             alt={user.username}
           />
+          <div className="text-center ml-10 lg:hidden">
+            <h2 className="text-sm font-bold">{user.likes} M</h2>
+            <p className="text-gray-500 text-xs">Likes</p>
+          </div>
         </div>
       </div>
 
-      <div className="flex flex-col items-center md:justify-between mt-20 ">
-        <div className="flex flex-col justify-center items-center text-center gap-2">
-          <h1 className="text-2xl font-bold">{user.username}</h1>
-          <h3 className="">J. Hello Guys</h3>
+      <div className="flex flex-col items-center md:justify-between lg:mt-20 mt-10">
+        <div className="flex flex-col justify-center items-center text-center lg:gap-2">
+          <h1 className="text-2xl font-bold font-balsamiq">{user.username}</h1>
+          <h3>J. Hello Guys</h3>
           <p className="text-sm text-gray-500 mb-3">
             Follow me and like my post
           </p>
@@ -73,8 +89,7 @@ function UserProfile() {
           </button>
         </div>
       </div>
-
-      <div className="flex justify-center space-x-8 mt-4">
+      <div className=" hidden lg:flex justify-center space-x-8 mt-4 ">
         <div className="text-center">
           <h2 className="text-xl font-bold">{user.followers} M</h2>
           <p className="text-gray-500">Followers</p>
@@ -84,7 +99,6 @@ function UserProfile() {
           <p className="text-gray-500">Likes</p>
         </div>
       </div>
-
       <div className="flex justify-center space-x-8 mt-8">
         <button className="pb-2 border-b-2 border-red-500 text-red-500">
           Photos
@@ -94,7 +108,7 @@ function UserProfile() {
         <button className="pb-2 text-gray-500">Tag</button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
+      <div className="grid grid-cols-2 gap-4 mt-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {user.posts && user.posts.length > 0 ? (
           user.posts.map((post, index) => (
             <img
