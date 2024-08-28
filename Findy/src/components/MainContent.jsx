@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import iconNoti from "/icons/heart.svg";
 import iconComentario from "/icons/comentario.svg";
 import iconResponse from "/icons/responses.svg";
+import logoFindy from "/logo/LOGOFINDY.png";
+import iconMensaje from "/icons/mensaje.svg";
+import { Link } from "react-router-dom";
 
 function MainContent() {
   const [users, setUsers] = useState([]);
@@ -15,14 +18,14 @@ function MainContent() {
         }
         return response.json();
       })
-      .then((userData) => {
-        const filteredUsers = userData.filter(
+      .then((usersData) => {
+        const filteredUsers = usersData.filter(
           (user) => user.profilePicture && user.posts && user.posts.length > 0
         );
         setUsers(filteredUsers);
       })
       .catch((error) => {
-        console.error("Erorr fetching data", error);
+        console.error("Error fetching data:", error);
         setError(error.message);
       });
   }, []);
@@ -32,9 +35,20 @@ function MainContent() {
   }
 
   return (
-    <div className="flex flex-col items-center w-[500px] max-w-screen-lg mx-auto p-4 font-balsamiq">
+    <div className="flex flex-col lg:items-center lg:w-[500px] max-w-screen-lg w-full mx-auto p-4 font-balsamiq ">
       {/* Stories Section */}
-      <div className="mb-8 flex overflow-x-auto scrollbar-hide">
+      <div className="flex justify-between lg:hidden sm:block mb-5">
+        <img src={logoFindy} alt="LogoFIndy" />
+        <ul className="flex gap-2">
+          <li className="flex cursor-pointer hover:text-pastel items-center m-">
+            <img className="" src={iconNoti} alt="iconBuscar" />
+          </li>
+          <li className="flex cursor-pointer hover:text-pastel items-center">
+            <img className="" src={iconMensaje} alt="iconBuscar" />
+          </li>
+        </ul>
+      </div>
+      <div className="mb-8 flex overflow-x-auto scrollbar-hide justify-center">
         <div className="flex space-x-4">
           {users.map((user) => (
             <div key={user.id} className="flex-shrink-0 text-center">
@@ -48,7 +62,7 @@ function MainContent() {
           ))}
         </div>
       </div>
-      {/* Posts Section */}
+
       <div className="w-full">
         <div className="grid grid-cols-1 gap-4">
           {users.map((user) =>
@@ -57,13 +71,16 @@ function MainContent() {
                 key={post.postId}
                 className="bg-white p-4 border rounded-lg shadow-md"
               >
-                <h1 className="mb-4 text-lg font-semibold text-gray-700">
+                <Link
+                  to={`/profile/${user.id}`}
+                  className="mb-4 text-lg font-semibold text-gray-700"
+                >
                   {user.username}
-                </h1>
+                </Link>
                 <img
                   src={post.postPicture}
                   alt={user.username}
-                  className="w-full h-[30rem] rounded-lg object-cover mb-4"
+                  className="w-full lg:h-[30rem] h-[25rem] rounded-lg object-cover mb-4"
                 />
                 <div className="flex p-2 items-start gap-2">
                   <div className="flex flex-col space-x-2">
@@ -94,10 +111,14 @@ function MainContent() {
                   </div>
                 </div>
                 <p className="p-2 text-sm text-gray-700">
-                  <span className="font-bold text-[20px]">
-                    {user.username},{" "}
-                  </span>
-                  {user.description}
+                  <Link
+                    to={`/profile/${user.id}`}
+                    className="mb-4 text-lg font-semibold text-gray-700"
+                  >
+                    {user.username}
+                    <br />
+                  </Link>
+                  {post.description}
                 </p>
               </div>
             ))
