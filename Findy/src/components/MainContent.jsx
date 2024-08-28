@@ -35,7 +35,7 @@ function MainContent() {
   }
 
   return (
-    <div className="flex flex-col lg:items-center lg:w-[500px] max-w-screen-lg w-full mx-auto p-4 font-balsamiq ">
+    <div className="flex flex-col lg:items-center lg:w-[500px] max-w-screen-lg w-full mx-auto p-4 font-balsamiq">
       {/* Stories Section */}
       <div className="flex justify-between lg:hidden sm:block mb-5">
         <img src={logoFindy} alt="LogoFIndy" />
