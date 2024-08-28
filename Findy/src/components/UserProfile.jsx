@@ -85,7 +85,7 @@ function UserProfile() {
         </div>
       </div>
 
-      <div className="flex justify-center space-x-8 mt-8 border-b">
+      <div className="flex justify-center space-x-8 mt-8">
         <button className="pb-2 border-b-2 border-red-500 text-red-500">
           Photos
         </button>

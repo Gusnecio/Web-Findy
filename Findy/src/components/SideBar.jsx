@@ -6,6 +6,7 @@ import iconNoti from "/icons/heart.svg";
 import iconMensaje from "/icons/mensaje.svg";
 import iconCreate from "/icons/create.svg";
 import iconHistoria from "/histories/JennieKim.png";
+import { Link } from "react-router-dom";
 import Modal from "./Modal";
 
 const SideBar = () => {
@@ -27,12 +28,14 @@ const SideBar = () => {
         </div>
         <ul className="flex lg:flex-col lg:w-[38%] lg:space-y-11 font-balsamiq lg:text-[20px] justify-between lg:bg-none ">
           <li className="flex cursor-pointer hover:text-pastel items-center">
-            <img
-              className="lg:mr-3 lg:invert-0 invert"
-              src={iconInicio}
-              alt="iconInicio"
-            />
-            <span className="lg:flex hidden">Inicio</span>
+            <Link to="/layout" className="flex items-center">
+              <img
+                className="lg:mr-3 lg:invert-0 invert"
+                src={iconInicio}
+                alt="iconInicio"
+              />
+              <span className="lg:flex hidden">Inicio</span>
+            </Link>
           </li>
           <li className="flex cursor-pointer hover:text-pastel items-center">
             <img
