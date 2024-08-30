@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SideBar from "./SideBar";
 import atras from "/icons/atras.svg";
+import { Link } from "react-router-dom";
 function UserProfile() {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
@@ -38,40 +39,48 @@ function UserProfile() {
   const coverPhoto = user.posts.find((post) => post.postId === 2);
 
   return (
-    <div className="lg:w-[80%] lg:ml-[17%] lg:p-1 lg:font-balsamiq w-full max-w-screen-xl">
+    <div className="lg:w-[90%] lg:ml-[20%] lg:p-1 lg:font-balsamiq w-full max-w-screen-xl">
       <SideBar />
       <div className="relative">
-        <div className="flex space-x-4 absolute left-4 top-4 lg:hidden">
-          <div className="flex items-center justify-start mt-4">
-            <img src={atras} alt={"atras"} />
-          </div>
-          <div>
-            <p className=" ml-[300px] text-4xl">...</p>
+        <div className="fixed lg:hidden w-full items-center">
+          <div className="flex justify-between items-center m-2">
+            <div className="">
+              <Link to="/layout">
+                <img src={atras} alt={"atras"} />
+              </Link>
+            </div>
+            <div>
+              <p className="text-4xl leading-none mt-[-25px]">...</p>
+            </div>
           </div>
         </div>
         <img
-          className="lg:w-full"
+          className="lg:w-full lg:h-[500px] w-full h-[300px]"
           src={coverPhoto ? coverPhoto.postPicture : "/default-cover.png"}
           alt={`${user.username}`}
         />
-        <div className="absolute left-[45%] transform -translate-x-[45%] lg:-bottom-16 flex items-center  ">
+        <div className="absolute lg:-bottom-16 flex items-center w-[100%] justify-center">
           <div className="text-center mr-10 lg:hidden">
-            <h2 className="text-sm font-bold">{user.followers} M</h2>
+            <h2 className="text-sm font-bold lg:mt-0 mt-2">
+              {user.followers} M
+            </h2>
             <p className="text-gray-500 text-xs">Followers</p>
           </div>
           <img
-            className="lg:w-[150px] lg:h-[150px] lg:ml-24  rounded-full border-4 border-white -mt-14"
+            className="lg:w-[150px] lg:h-[150px] rounded-full border-4 border-white -mt-14"
             src={user.profilePicture}
             alt={user.username}
           />
           <div className="text-center ml-10 lg:hidden">
-            <h2 className="text-sm font-bold">{user.likes} M</h2>
+            <h2 className="text-sm font-bold max-w-20 lg:mt-0 mt-2">
+              {user.likes} M
+            </h2>
             <p className="text-gray-500 text-xs">Likes</p>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col items-center md:justify-between lg:mt-20 mt-10">
+      <div className="flex flex-col items-center md:justify-between lg:mt-20 mt-12">
         <div className="flex flex-col justify-center items-center text-center lg:gap-2">
           <h1 className="text-2xl font-bold font-balsamiq">{user.username}</h1>
           <h3>J. Hello Guys</h3>
@@ -99,28 +108,31 @@ function UserProfile() {
           <p className="text-gray-500">Likes</p>
         </div>
       </div>
-      <div className="flex justify-center space-x-8 mt-8">
-        <button className="pb-2 border-b-2 border-red-500 text-red-500">
-          Photos
-        </button>
-        <button className="pb-2 text-gray-500">Videos</button>
-        <button className="pb-2 text-gray-500">Album</button>
-        <button className="pb-2 text-gray-500">Tag</button>
-      </div>
+      <div className="bg-white lg:bg-white rounded-[45px] p-4 mt-8">
+        <div className="flex justify-center space-x-8">
+          <button className="pb-2 border-b-2 border-red-500 text-red-500">
+            Photos
+          </button>
+          <button className="pb-2 text-gray-500">Videos</button>
+          <button className="pb-2 text-gray-500">Album</button>
+          <button className="pb-2 text-gray-500">Tag</button>
+        </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {user.posts && user.posts.length > 0 ? (
-          user.posts.map((post, index) => (
-            <img
-              key={index}
-              src={post.postPicture}
-              alt={`Post ${index + 1}`}
-              className="w-full h-64 object-cover rounded-md"
-            />
-          ))
-        ) : (
-          <p>No hay fotos disponibles.</p>
-        )}
+        <div className="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {user.posts && user.posts.length > 0 ? (
+            user.posts.map((post, index) => (
+              <Link key={index} to={`/profile/${userId}/post/${post.postId}`}>
+                <img
+                  src={post.postPicture}
+                  alt={`Post ${index + 1}`}
+                  className="w-full h-64 object-cover rounded-md"
+                />
+              </Link>
+            ))
+          ) : (
+            <p>No hay fotos disponibles.</p>
+          )}
+        </div>
       </div>
     </div>
   );

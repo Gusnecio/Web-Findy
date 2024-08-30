@@ -3,6 +3,7 @@ import Layout from "../components/Layout/Layout";
 import Login from "../components/Login.jsx";
 import Register from "../components/Register.jsx";
 import UserProfile from "../components/UserProfile.jsx";
+import PostDetail from "../components/PostDetail.jsx";
 
 const AppRouter = () => {
   return (
@@ -12,6 +13,7 @@ const AppRouter = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/profile/:userId" element={<UserProfile />} />
+        <Route path="/profile/:userId/post/:postId" element={<PostDetail />} />
       </Routes>
     </Router>
   );

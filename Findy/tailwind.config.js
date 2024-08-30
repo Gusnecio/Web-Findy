@@ -8,6 +8,7 @@ export default {
       },
       fontFamily: {
         balsamiq: ["'Balsamiq Sans'", "sans-serif"],
+        baloo: ["'Baloo Thambi 2'", "cursive"],
       },
       backgroundImage: {
         "nav-bg": "url('/icons/nav.png')",

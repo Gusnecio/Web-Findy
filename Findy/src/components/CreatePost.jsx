@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const CreatePostForm = () => {
   const [user, setUser] = useState(null);
-  const [postPicture, setPostPicture] = useState("");
+  const [postPictureUrl, setPostPictureUrl] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    // Reemplaza con el ID del usuario apropiado
     const userId = 1;
 
     const fetchUser = async () => {
@@ -30,11 +29,8 @@ const CreatePostForm = () => {
     fetchUser();
   }, []);
 
-  const handlePictureChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setPostPicture(file);
-    }
+  const handlePictureUrlChange = (event) => {
+    setPostPictureUrl(event.target.value);
   };
 
   const handleDescriptionChange = (event) => {
@@ -49,29 +45,22 @@ const CreatePostForm = () => {
       return;
     }
 
-    if (!postPicture || !description) {
-      setError("Please provide both a picture and a description.");
+    if (!postPictureUrl || !description) {
+      setError("Please provide both a picture URL and a description.");
       return;
     }
 
-    // Generar un nuevo postId
     const newPostId = user.posts.length
       ? Math.max(user.posts.map((post) => post.postId)) + 1
       : 1;
 
-    // Aquí debes subir la imagen a un servidor y obtener la URL de la imagen
-    // Aquí solo usaremos una URL ficticia para la demostración
-    const imageUrl = "/posts/your-image-url.png";
-
-    // Preparar el nuevo post
     const newPost = {
       postId: newPostId,
-      postPicture: imageUrl, // Cambia esto por la URL de la imagen subida
+      postPicture: postPictureUrl,
       description,
-      date: new Date().toISOString().split("T")[0], // Fecha actual
+      date: new Date().toISOString().split("")[0],
     };
 
-    // Añadir el nuevo post a los posts existentes
     const updatedPosts = [...user.posts, newPost];
 
     try {
@@ -93,7 +82,7 @@ const CreatePostForm = () => {
       const result = await response.json();
       setSuccess("Post created successfully!");
       setDescription("");
-      setPostPicture("");
+      setPostPictureUrl("");
       setError(null);
       console.log("Post created:", result);
     } catch (error) {
@@ -109,12 +98,12 @@ const CreatePostForm = () => {
   return (
     <form onSubmit={handleSubmit} className="create-post-form">
       <div>
-        <label htmlFor="postPicture">Post Picture:</label>
+        <label htmlFor="postPictureUrl">Post Picture URL:</label>
         <input
-          type="file"
-          id="postPicture"
-          onChange={handlePictureChange}
-          accept="image/*"
+          type="text"
+          id="postPictureUrl"
+          value={postPictureUrl}
+          onChange={handlePictureUrlChange}
         />
       </div>
       <div>
