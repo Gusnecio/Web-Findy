@@ -114,7 +114,7 @@ const CreatePostForm = () => {
           onChange={handleDescriptionChange}
         />
       </div>
-      <button type="submit">Create Post</button>
+      <button type="submit">Create Pos</button>
       {error && <div className="error-message">{error}</div>}
       {success && <div className="success-message">{success}</div>}
     </form>
