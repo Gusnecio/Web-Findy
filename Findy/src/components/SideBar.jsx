@@ -1,4 +1,3 @@
-import { useState } from "react";
 import logoFindy from "/logo/LOGOFINDY.png";
 import iconInicio from "/icons/home.svg";
 import iconBuscar from "/icons/search.svg";
@@ -7,19 +6,8 @@ import iconMensaje from "/icons/mensaje.svg";
 import iconCreate from "/icons/create.svg";
 import iconHistoria from "/histories/JennieKim.png";
 import { Link } from "react-router-dom";
-import Modal from "./Modal";
 
 const SideBar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleCreateClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <nav className="lg:flex fixed z-10 lg:w-[250px] lg:p-0 p-2 w-full lg:top-0 lg:left-0 bottom-0 lg:h-[100vh] lg:ml-3 lg:items-center lg:justify-center border-r-2 border-gray-300 lg:bg-white bg-nav-bg bg-cover bg-no-repeat bg-bottom lg:rounded-b-none rounded-b-[30px] lg:bg-none">
       <div className="lg:flex lg:flex-col">
@@ -45,10 +33,7 @@ const SideBar = () => {
             />
             <span className="lg:flex hidden">Busqueda</span>
           </li>
-          <li
-            className="flex cursor-pointer hover:text-pastel items-center justify-center"
-            onClick={handleCreateClick}
-          >
+          <li className="flex cursor-pointer hover:text-pastel items-center justify-center">
             <div className="lg:flex lg:relative absolute lg:top-0 top-[-30px] lg:bg-transparent bg-pastel lg:rounded-none rounded-full flex z-10 lg:w-[85px] lg:h-[24px] w-[65px] h-[65px] lg:justify-normal justify-center lg:left-0 left-[42%]">
               <img
                 className="lg:mr-3 lg:invert-0 invert lg:w-[24px] w-10"
@@ -76,7 +61,6 @@ const SideBar = () => {
           </li>
         </ul>
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
     </nav>
   );
 };

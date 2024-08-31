@@ -4,11 +4,25 @@ import iconComentario from "/icons/comentario.svg";
 import iconResponse from "/icons/responses.svg";
 import logoFindy from "/logo/LOGOFINDY.png";
 import iconMensaje from "/icons/mensaje.svg";
+import { useAppContext } from "./Context";
 import { Link } from "react-router-dom";
 
 function MainContent() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const { state, dispatch } = useAppContext();
+  const [commentInput, setCommentInput] = useState("");
+  const [activePost, setActivePost] = useState(null);
+
+  const handleLike = (postId, userId) => {
+    dispatch({ type: "TOGGLE_LIKE", payload: { postId, userId } });
+  };
+
+  const handleComment = (postId, comment) => {
+    if (comment.trim() === "") return;
+    dispatch({ type: "ADD_COMMENT", payload: { postId, comment } });
+    setCommentInput("");
+  };
 
   useEffect(() => {
     fetch("https://fake-api-eight-gilt.vercel.app/users")
@@ -80,7 +94,7 @@ function MainContent() {
                   to={`/profile/${user.id}`}
                   className="text-lg font-semibold text-gray-700 "
                 >
-                  {user.username}
+                  <h3>{user.username}</h3>
                 </Link>
                 <img
                   src={post.postPicture}
@@ -88,43 +102,60 @@ function MainContent() {
                   className="w-full lg:h-[30rem] h-[25rem] rounded-lg object-cover mb-4 mt-4"
                 />
                 <div className="flex p-2 items-start gap-2">
-                  <div className="flex flex-col space-x-2">
-                    <img className="w-6 h-6" src={iconNoti} alt="Likes" />
-                    <p className="text-sm text-gray-700">
-                      {user.likes?.length}
-                    </p>
+                  <div className="flex flex-col items-center">
+                    <button onClick={() => handleLike(post.postId, user.id)}>
+                      {state.likes[post.postId]?.includes(user.id) ? (
+                        "❤️"
+                      ) : (
+                        <img src={iconNoti} alt="Like" />
+                      )}
+                    </button>
+                    <span>{state.likes[post.postId]?.length || 0}</span>
                   </div>
-                  <div className="flex flex-col space-x-2">
+                  <div className="flex flex-col items-center">
                     <img
-                      className="w-6 h-6"
+                      className="w-6 h-6 cursor-pointer"
                       src={iconComentario}
-                      alt="Comments"
+                      alt="Comment"
+                      onClick={() =>
+                        setActivePost(
+                          activePost === post.postId ? null : post.postId
+                        )
+                      }
                     />
-                    <p className="text-sm text-gray-700">
-                      {user.comments?.length}
-                    </p>
+                    <span>{state.comments[post.postId]?.length || 0}</span>
                   </div>
-                  <div className="flex flex-col space-x-2">
+                  <div className="flex flex-col items-center">
                     <img
                       className="w-6 h-6"
                       src={iconResponse}
                       alt="Responses"
                     />
-                    <p className="text-sm text-gray-700">
-                      {user.responses?.length}
-                    </p>
+                    <p className="text-sm text-gray-700">{user.responses}</p>
                   </div>
                 </div>
-                <p className="p-2 text-sm text-gray-700">
-                  <Link
-                    to={`/profile/${user.id}`}
-                    className="mb-4 text-lg font-semibold text-gray-700"
-                  >
-                    {user.username}
-                    <br />
-                  </Link>
-                  {post.description}
-                </p>
+                {activePost === post.postId && (
+                  <div className="mt-4">
+                    {state.comments[post.postId]?.map((comment, index) => (
+                      <p key={index} className="text-sm text-gray-700">
+                        {comment}
+                      </p>
+                    ))}
+                    <input
+                      type="text"
+                      value={commentInput}
+                      onChange={(e) => setCommentInput(e.target.value)}
+                      placeholder="Add a comment..."
+                      className="mt-2 border p-2 rounded w-full"
+                    />
+                    <button
+                      onClick={() => handleComment(post.postId, commentInput)}
+                      className="mt-2 text-white p-2 rounded bg-pastel"
+                    >
+                      Comment
+                    </button>
+                  </div>
+                )}
               </div>
             ))
           )}

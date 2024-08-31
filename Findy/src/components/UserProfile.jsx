@@ -7,6 +7,7 @@ function UserProfile() {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -27,7 +28,18 @@ function UserProfile() {
 
     fetchUser();
   }, [userId]);
+  const handleFollowClick = () => {
+    if (user) {
+      const newFollowersCount = isFollowing
+        ? user.followers - 1
+        : user.followers + 1;
+      setUser({ ...user, followers: newFollowersCount });
+      setIsFollowing(!isFollowing);
 
+      // Guardar el estado en localStorage
+      localStorage.setItem(`following_${userId}`, !isFollowing);
+    }
+  };
   if (error) {
     return <div className="text-red-500">Error: {error}</div>;
   }
@@ -39,7 +51,7 @@ function UserProfile() {
   const coverPhoto = user.posts.find((post) => post.postId === 2);
 
   return (
-    <div className="lg:w-[90%] lg:ml-[20%] lg:p-1 lg:font-balsamiq w-full max-w-screen-xl">
+    <div className="lg:w-[90%] lg:ml-[20%] lg:p-1 font-balsamiq w-full max-w-screen-xl">
       <SideBar />
       <div className="relative">
         <div className="fixed lg:hidden w-full items-center">
@@ -84,14 +96,15 @@ function UserProfile() {
         <div className="flex flex-col justify-center items-center text-center lg:gap-2">
           <h1 className="text-2xl font-bold font-balsamiq">{user.username}</h1>
           <h3>J. Hello Guys</h3>
-          <p className="text-sm text-gray-500 mb-3">
-            Follow me and like my post
-          </p>
+          <p className="text-smmb-3">Follow me and like my post</p>
         </div>
 
         <div className="mt-4 md:mt-0 flex gap-5">
-          <button className="w-[150px] px-4 py-2 bg-pastel text-white rounded-md">
-            Follow
+          <button
+            onClick={handleFollowClick}
+            className="w-[150px] px-4 py-2 bg-pastel text-white rounded-md"
+          >
+            {isFollowing ? "Followed" : "Follow"}
           </button>
           <button className="w-[150px] px-4 py-2 bg-pastel text-white rounded-md">
             Messages
