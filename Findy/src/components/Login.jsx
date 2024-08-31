@@ -28,9 +28,7 @@ const Login = () => {
 
       if (response.ok) {
         const user = data.find(
-          (user) =>
-            (user.username === identifier || user.email === identifier) &&
-            user.password === password
+          (user) => user.email === identifier && user.password === password
         );
 
         if (user) {
@@ -66,7 +64,7 @@ const Login = () => {
               htmlFor="username o email"
               className="block text-sm font-medium text-gray-700"
             >
-              Usario o Correo Electronico
+              Correo Electronico
             </label>
             <input
               id="email"
