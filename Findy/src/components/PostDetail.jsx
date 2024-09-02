@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import iconNoti from "/icons/heart.svg";
 import iconComentario from "/icons/comentario.svg";
@@ -17,6 +17,8 @@ const PostDetail = () => {
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
+  const location = useLocation();
+  const { activeSection } = location.state || {};
 
   useEffect(() => {
     const fetchUserPost = async () => {
@@ -83,6 +85,10 @@ const PostDetail = () => {
     return <div>Cargando...</div>;
   }
 
+  const isPhotoSection = activeSection === "Photos";
+  const displayImage = isPhotoSection
+    ? post.postPicture
+    : post.postVideoPicture;
   return (
     <div className="lg:w-[90%] lg:ml-[20%] lg:p-1 lg:font-balsamiq w-full max-w-screen-xl font-balsamiq">
       <SideBar />
@@ -98,13 +104,15 @@ const PostDetail = () => {
           </div>
         </div>
       </div>
-      <img
-        className="lg:w-full lg:h-[500px] w-full h-[500px]"
-        src={post.postPicture ? post.postPicture : "/default-cover.png"}
-        alt={`Post ${postId}`}
-      />
+      <div className="w-full flex justify-center lg:mt-10">
+        <img
+          className="lg:w-[50%] lg:h-[400px] w-full h-[500px] rounded-[20px]"
+          src={displayImage || "/default-cover.png"}
+          alt={`Post ${postId}`}
+        />
+      </div>
       <div className="relative flex justify-center m-auto">
-        <div className="absolute lg:top-[-50px] top-[-40px] lg:p-10 p-5 gap-5 flex items-center justify-around lg:h-[100px] h-[80px] z-10 transform lg:bg-gray-300 bg-white rounded-[20px]">
+        <div className="absolute lg:top-[-50px] top-[-40px] lg:p-10 p-5 gap-5 flex items-center justify-around lg:h-[100px] h-[80px] z-10 transform bg-white rounded-[20px]">
           <img
             className=" lg:w-[60px] lg:h-[60px] w-[50px] h-[50px]"
             src={user.profilePicture}
@@ -143,7 +151,7 @@ const PostDetail = () => {
             alt={user.username}
           />
           <input
-            className="lg:w-[356px] h-[40px] w-[300px] lg shadow-md rounded-[20px] p-5 border border-black"
+            className="lg:w-[356px] h-[40px] w-[300px] shadow-md rounded-[20px] p-5 border border-black"
             name="myInput"
             placeholder="Write comment as username...."
             value={commentInput}

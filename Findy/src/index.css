@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: rgb(252, 233, 236);
+}
+
 @media (max-width: 768px) {
   body {
     background: linear-gradient(

@@ -8,6 +8,7 @@ function UserProfile() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [activeTab, setActiveTab] = useState("Photos");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -28,6 +29,7 @@ function UserProfile() {
 
     fetchUser();
   }, [userId]);
+
   const handleFollowClick = () => {
     if (user) {
       const newFollowersCount = isFollowing
@@ -36,7 +38,6 @@ function UserProfile() {
       setUser({ ...user, followers: newFollowersCount });
       setIsFollowing(!isFollowing);
 
-      // Guardar el estado en localStorage
       localStorage.setItem(`following_${userId}`, !isFollowing);
     }
   };
@@ -49,7 +50,14 @@ function UserProfile() {
   }
 
   const coverPhoto = user.posts.find((post) => post.postId === 2);
-
+  const filteredPosts = user.posts.filter((post) => {
+    if (activeTab === "Photos") {
+      return post.postPicture;
+    } else if (activeTab === "Videos") {
+      return post.postVideoPicture;
+    }
+    return false;
+  });
   return (
     <div className="lg:w-[90%] lg:ml-[20%] lg:p-1 font-balsamiq w-full max-w-screen-xl">
       <SideBar />
@@ -72,10 +80,8 @@ function UserProfile() {
           alt={`${user.username}`}
         />
         <div className="absolute lg:-bottom-16 flex items-center w-[100%] justify-center">
-          <div className="text-center mr-10 lg:hidden">
-            <h2 className="text-sm font-bold lg:mt-0 mt-2">
-              {user.followers} M
-            </h2>
+          <div className="text-center mr-[20px] lg:hidden">
+            <h2 className="text-sm font-bold lg:mt-0 mt-2">{user.followers}</h2>
             <p className="text-gray-500 text-xs">Followers</p>
           </div>
           <img
@@ -85,18 +91,18 @@ function UserProfile() {
           />
           <div className="text-center ml-10 lg:hidden">
             <h2 className="text-sm font-bold max-w-20 lg:mt-0 mt-2">
-              {user.likes} M
+              {user.likes}
             </h2>
             <p className="text-gray-500 text-xs">Likes</p>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col items-center md:justify-between lg:mt-20 mt-12">
+      <div className="flex flex-col items-center md:justify-between lg:mt-20 mt-12 ">
         <div className="flex flex-col justify-center items-center text-center lg:gap-2">
           <h1 className="text-2xl font-bold font-balsamiq">{user.username}</h1>
           <h3>J. Hello Guys</h3>
-          <p className="text-smmb-3">Follow me and like my post</p>
+          <p className="text-smmb-3 mb-3">Follow me and like my post</p>
         </div>
 
         <div className="mt-4 md:mt-0 flex gap-5">
@@ -121,29 +127,55 @@ function UserProfile() {
           <p className="text-gray-500">Likes</p>
         </div>
       </div>
-      <div className="bg-white lg:bg-white rounded-[45px] p-4 mt-8">
+      <div className="bg-white lg:bg-white rounded-[45px] p-4 mt-8  mb-20">
         <div className="flex justify-center space-x-8">
-          <button className="pb-2 border-b-2 border-red-500 text-red-500">
+          <button
+            className={`pb-2 ${
+              activeTab === "Photos"
+                ? "border-b-2 border-red-500 text-red-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("Photos")}
+          >
             Photos
           </button>
-          <button className="pb-2 text-gray-500">Videos</button>
+          <button
+            className={`pb-2 ${
+              activeTab === "Videos"
+                ? "border-b-2 border-red-500 text-red-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("Videos")}
+          >
+            Videos
+          </button>
           <button className="pb-2 text-gray-500">Album</button>
           <button className="pb-2 text-gray-500">Tag</button>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {user.posts && user.posts.length > 0 ? (
-            user.posts.map((post, index) => (
-              <Link key={index} to={`/profile/${userId}/post/${post.postId}`}>
+        <div className="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-10">
+          {filteredPosts.length > 0 ? (
+            filteredPosts.map((post, index) => (
+              <Link
+                key={index}
+                to={`/profile/${userId}/post/${post.postId}`}
+                state={{ activeSection: activeTab }}
+              >
                 <img
-                  src={post.postPicture}
+                  src={
+                    activeTab === "Photos"
+                      ? post.postPicture
+                      : post.postVideoPicture
+                  }
                   alt={`Post ${index + 1}`}
                   className="w-full h-64 object-cover rounded-md"
                 />
               </Link>
             ))
           ) : (
-            <p>No hay fotos disponibles.</p>
+            <p>
+              No hay {activeTab === "Videos" ? "videos" : "fotos"} disponibles.
+            </p>
           )}
         </div>
       </div>

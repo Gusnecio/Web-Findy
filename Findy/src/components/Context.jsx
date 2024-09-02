@@ -43,7 +43,6 @@ function appReducer(state, action) {
       updatedState = state;
   }
 
-  // Sincronizar con localStorage
   localStorage.setItem("appState", JSON.stringify(updatedState));
 
   return updatedState;

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <nav className="lg:flex fixed z-10 lg:w-[250px] lg:p-0 p-2 w-full lg:top-0 lg:left-0 bottom-0 lg:h-[100vh] lg:ml-3 lg:items-center lg:justify-center border-r-2 border-gray-300 lg:bg-white bg-nav-bg bg-cover bg-no-repeat bg-bottom lg:rounded-b-none rounded-b-[30px] lg:bg-none">
+    <nav className="lg:flex fixed z-10 lg:w-[250px] lg:p-0 p-2 w-full lg:top-0 lg:left-0 bottom-0 lg:h-[100vh] lg:ml-3 lg:items-center lg:justify-center border-r-2 border-gray-300  bg-nav-bg bg-cover bg-no-repeat bg-bottom lg:rounded-b-none rounded-b-[30px] lg:bg-none">
       <div className="lg:flex lg:flex-col">
         <div className="mb-10 lg:flex hidden">
           <img src={logoFindy} alt="LogoFIndy" />
@@ -18,7 +18,7 @@ const SideBar = () => {
           <li className="flex cursor-pointer hover:text-pastel items-center">
             <Link to="/layout" className="flex items-center">
               <img
-                className="lg:mr-3 lg:invert-0 invert"
+                className="lg:mr-3 lg:ml-0 ml-3 lg:invert-0 invert"
                 src={iconInicio}
                 alt="iconInicio"
               />
@@ -56,7 +56,11 @@ const SideBar = () => {
             Mensajes
           </li>
           <li className="flex cursor-pointer hover:text-pastel items-center">
-            <img className="lg:mr-3 w-10" src={iconHistoria} alt="iconPerfil" />
+            <img
+              className="lg:mr-3 mr-3 w-10"
+              src={iconHistoria}
+              alt="iconPerfil"
+            />
             <span className="lg:flex hidden">Perfil</span>
           </li>
         </ul>
