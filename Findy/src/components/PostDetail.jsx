@@ -106,7 +106,7 @@ const PostDetail = () => {
       </div>
       <div className="w-full flex justify-center lg:mt-10">
         <img
-          className="lg:w-[50%] lg:h-[400px] w-full h-[500px] rounded-[20px]"
+          className="lg:w-[50%] lg:h-[400px] w-full h-[500px] lg:rounded-[20px] rounded-b-[25px]"
           src={displayImage || "/default-cover.png"}
           alt={`Post ${postId}`}
         />
