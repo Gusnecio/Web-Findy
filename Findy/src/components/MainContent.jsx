@@ -74,9 +74,11 @@ function MainContent() {
                 alt={user.username}
                 className="w-16 h-16 rounded-full border-2 border-pink-500 p-1 object-cover"
               />
-              <p className="mt-2 text-sm text-gray-700 flex items-center max-w-20">
-                {user.username.split(" ")[0]}
-              </p>
+              <Link to={`/profile/${user.id}`}>
+                <p className="mt-2 text-sm text-gray-700 flex items-center max-w-20">
+                  {user.username.split(" ")[0]}
+                </p>
+              </Link>
             </div>
           ))}
         </div>
