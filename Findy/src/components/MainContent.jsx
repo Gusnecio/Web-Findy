@@ -85,7 +85,7 @@ function MainContent() {
       </div>
 
       <div className="w-full">
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-4 mb-[75px]">
           {users.map((user) =>
             user.posts.map((post) => (
               <div
